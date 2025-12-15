@@ -1,6 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
@@ -19,7 +18,7 @@ from rename import rename_dir
 CLASSROOM = "https://www.scaler.com/academy/mentee-dashboard/classes/regular"
 MASTERCLASS = "https://www.scaler.com/academy/mentee-dashboard/classes/events/masterclasses"
 DOWNLOAD_PATH = str(pathlib.Path(
-    __file__).parent.absolute()) + r"\output\raw\\"
+    __file__).parent.absolute()) + r"\\output\\raw\\\\"
 DOWNLOAD_PATH = DOWNLOAD_PATH[:-1]
 
 driver = None
@@ -32,16 +31,14 @@ name = ''
 # Driver init
 def init_driver():
     global driver
-    capabilities = DesiredCapabilities.CHROME
-    capabilities["goog:loggingPrefs"] = {"performance": "ALL"}
     chromeOptions = webdriver.ChromeOptions()
     prefs = {"download.default_directory": DOWNLOAD_PATH}
     chromeOptions.add_experimental_option("prefs", prefs)
     chromeOptions.add_experimental_option(
         'excludeSwitches', ['enable-logging'])
+    chromeOptions.set_capability("goog:loggingPrefs", {"performance": "ALL"})
     print("Initiating Chrome Driver...")
-    driver = webdriver.Chrome(
-        desired_capabilities=capabilities, options=chromeOptions)
+    driver = webdriver.Chrome(options=chromeOptions)
 
 
 def login():
