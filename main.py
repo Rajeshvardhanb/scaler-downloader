@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -39,7 +40,8 @@ def init_driver():
         'excludeSwitches', ['enable-logging'])
     chromeOptions.set_capability("goog:loggingPrefs", {"performance": "ALL"})
     print("Initiating Chrome Driver...")
-    driver = webdriver.Chrome(ChromeDriverManager().install(), options=chromeOptions)
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=chromeOptions)
 
 
 def login():
@@ -87,7 +89,7 @@ def download(link, _type):
             url = event['params']['response']['url']
         except:
             continue
-        if re.search('\\.m3u8', url):
+        if re.search(r'\.m3u8', url):
             flag = 0
             for item in videoLinks:
                 if item == url:
