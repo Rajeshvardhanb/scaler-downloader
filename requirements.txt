@@ -1,3 +1,4 @@
 selenium
 art
 youtube-dl
+webdriver-manager
